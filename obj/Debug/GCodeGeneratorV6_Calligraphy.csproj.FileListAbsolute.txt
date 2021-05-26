@@ -1,0 +1,40 @@
+C:\Users\datta\Desktop\VisualBasic\GCodeGeneratorV6_Calligraphy\bin\Debug\GCodeGeneratorV6_Calligraphy.exe.config
+C:\Users\datta\Desktop\VisualBasic\GCodeGeneratorV6_Calligraphy\bin\Debug\GCodeGeneratorV6_Calligraphy.exe
+C:\Users\datta\Desktop\VisualBasic\GCodeGeneratorV6_Calligraphy\bin\Debug\GCodeGeneratorV6_Calligraphy.pdb
+C:\Users\datta\Desktop\VisualBasic\GCodeGeneratorV6_Calligraphy\obj\Debug\GCodeGeneratorV6_Calligraphy.csprojAssemblyReference.cache
+C:\Users\datta\Desktop\VisualBasic\GCodeGeneratorV6_Calligraphy\obj\Debug\GCodeGeneratorV6_Calligraphy.Form1.resources
+C:\Users\datta\Desktop\VisualBasic\GCodeGeneratorV6_Calligraphy\obj\Debug\GCodeGeneratorV6_Calligraphy.Properties.Resources.resources
+C:\Users\datta\Desktop\VisualBasic\GCodeGeneratorV6_Calligraphy\obj\Debug\GCodeGeneratorV6_Calligraphy.csproj.GenerateResource.cache
+C:\Users\datta\Desktop\VisualBasic\GCodeGeneratorV6_Calligraphy\obj\Debug\GCodeGeneratorV6_Calligraphy.csproj.CoreCompileInputs.cache
+C:\Users\datta\Desktop\VisualBasic\GCodeGeneratorV6_Calligraphy\obj\Debug\GCodeGeneratorV6_Calligraphy.exe
+C:\Users\datta\Desktop\VisualBasic\GCodeGeneratorV6_Calligraphy\obj\Debug\GCodeGeneratorV6_Calligraphy.pdb
+C:\Users\datta\OneDrive - purdue.edu\Purdue\Research\Projects\Printing Electronics - IN PROGRESS\VisualBasic\GCodeGeneratorV6_Calligraphy\bin\Debug\GCodeGeneratorV6_Calligraphy.exe.config
+C:\Users\datta\OneDrive - purdue.edu\Purdue\Research\Projects\Printing Electronics - IN PROGRESS\VisualBasic\GCodeGeneratorV6_Calligraphy\bin\Debug\GCodeGeneratorV6_Calligraphy.exe
+C:\Users\datta\OneDrive - purdue.edu\Purdue\Research\Projects\Printing Electronics - IN PROGRESS\VisualBasic\GCodeGeneratorV6_Calligraphy\bin\Debug\GCodeGeneratorV6_Calligraphy.pdb
+C:\Users\datta\OneDrive - purdue.edu\Purdue\Research\Projects\Printing Electronics - IN PROGRESS\VisualBasic\GCodeGeneratorV6_Calligraphy\obj\Debug\GCodeGeneratorV6_Calligraphy.csprojAssemblyReference.cache
+C:\Users\datta\OneDrive - purdue.edu\Purdue\Research\Projects\Printing Electronics - IN PROGRESS\VisualBasic\GCodeGeneratorV6_Calligraphy\obj\Debug\GCodeGeneratorV6_Calligraphy.Form1.resources
+C:\Users\datta\OneDrive - purdue.edu\Purdue\Research\Projects\Printing Electronics - IN PROGRESS\VisualBasic\GCodeGeneratorV6_Calligraphy\obj\Debug\GCodeGeneratorV6_Calligraphy.Properties.Resources.resources
+C:\Users\datta\OneDrive - purdue.edu\Purdue\Research\Projects\Printing Electronics - IN PROGRESS\VisualBasic\GCodeGeneratorV6_Calligraphy\obj\Debug\GCodeGeneratorV6_Calligraphy.csproj.GenerateResource.cache
+C:\Users\datta\OneDrive - purdue.edu\Purdue\Research\Projects\Printing Electronics - IN PROGRESS\VisualBasic\GCodeGeneratorV6_Calligraphy\obj\Debug\GCodeGeneratorV6_Calligraphy.csproj.CoreCompileInputs.cache
+C:\Users\datta\OneDrive - purdue.edu\Purdue\Research\Projects\Printing Electronics - IN PROGRESS\VisualBasic\GCodeGeneratorV6_Calligraphy\obj\Debug\GCodeGeneratorV6_Calligraphy.exe
+C:\Users\datta\OneDrive - purdue.edu\Purdue\Research\Projects\Printing Electronics - IN PROGRESS\VisualBasic\GCodeGeneratorV6_Calligraphy\obj\Debug\GCodeGeneratorV6_Calligraphy.pdb
+C:\Users\saras\Downloads\School\4D printing\GCodeGeneratorV6_Calligraphy\bin\Debug\GCodeGeneratorV6_Calligraphy.exe.config
+C:\Users\saras\Downloads\School\4D printing\GCodeGeneratorV6_Calligraphy\bin\Debug\GCodeGeneratorV6_Calligraphy.exe
+C:\Users\saras\Downloads\School\4D printing\GCodeGeneratorV6_Calligraphy\bin\Debug\GCodeGeneratorV6_Calligraphy.pdb
+C:\Users\saras\Downloads\School\4D printing\GCodeGeneratorV6_Calligraphy\obj\Debug\GCodeGeneratorV6_Calligraphy.csprojAssemblyReference.cache
+C:\Users\saras\Downloads\School\4D printing\GCodeGeneratorV6_Calligraphy\obj\Debug\GCodeGeneratorV6_Calligraphy.Form1.resources
+C:\Users\saras\Downloads\School\4D printing\GCodeGeneratorV6_Calligraphy\obj\Debug\GCodeGeneratorV6_Calligraphy.Properties.Resources.resources
+C:\Users\saras\Downloads\School\4D printing\GCodeGeneratorV6_Calligraphy\obj\Debug\GCodeGeneratorV6_Calligraphy.csproj.GenerateResource.cache
+C:\Users\saras\Downloads\School\4D printing\GCodeGeneratorV6_Calligraphy\obj\Debug\GCodeGeneratorV6_Calligraphy.csproj.CoreCompileInputs.cache
+C:\Users\saras\Downloads\School\4D printing\GCodeGeneratorV6_Calligraphy\obj\Debug\GCodeGeneratorV6_Calligraphy.exe
+C:\Users\saras\Downloads\School\4D printing\GCodeGeneratorV6_Calligraphy\obj\Debug\GCodeGeneratorV6_Calligraphy.pdb
+C:\Users\saras\Downloads\School\Summer 2021\SURF\4D printing\GCodeGeneratorV6_Calligraphy\bin\Debug\GCodeGeneratorV6_Calligraphy.exe.config
+C:\Users\saras\Downloads\School\Summer 2021\SURF\4D printing\GCodeGeneratorV6_Calligraphy\bin\Debug\GCodeGeneratorV6_Calligraphy.exe
+C:\Users\saras\Downloads\School\Summer 2021\SURF\4D printing\GCodeGeneratorV6_Calligraphy\bin\Debug\GCodeGeneratorV6_Calligraphy.pdb
+C:\Users\saras\Downloads\School\Summer 2021\SURF\4D printing\GCodeGeneratorV6_Calligraphy\obj\Debug\GCodeGeneratorV6_Calligraphy.csprojAssemblyReference.cache
+C:\Users\saras\Downloads\School\Summer 2021\SURF\4D printing\GCodeGeneratorV6_Calligraphy\obj\Debug\GCodeGeneratorV6_Calligraphy.Form1.resources
+C:\Users\saras\Downloads\School\Summer 2021\SURF\4D printing\GCodeGeneratorV6_Calligraphy\obj\Debug\GCodeGeneratorV6_Calligraphy.Properties.Resources.resources
+C:\Users\saras\Downloads\School\Summer 2021\SURF\4D printing\GCodeGeneratorV6_Calligraphy\obj\Debug\GCodeGeneratorV6_Calligraphy.csproj.GenerateResource.cache
+C:\Users\saras\Downloads\School\Summer 2021\SURF\4D printing\GCodeGeneratorV6_Calligraphy\obj\Debug\GCodeGeneratorV6_Calligraphy.csproj.CoreCompileInputs.cache
+C:\Users\saras\Downloads\School\Summer 2021\SURF\4D printing\GCodeGeneratorV6_Calligraphy\obj\Debug\GCodeGeneratorV6_Calligraphy.exe
+C:\Users\saras\Downloads\School\Summer 2021\SURF\4D printing\GCodeGeneratorV6_Calligraphy\obj\Debug\GCodeGeneratorV6_Calligraphy.pdb
