@@ -46,6 +46,12 @@ namespace GCodeGeneratorV6_Calligraphy
                 Print_Spiral(outputFile);
             }
 
+            if(BLE_IC_breakout.Checked)
+            {
+                Initialization(outputFile);
+                Print_BLE_IC_breakout(outputFile);
+            }
+
             End(outputFile);
         }
 
@@ -56,6 +62,11 @@ namespace GCodeGeneratorV6_Calligraphy
                 f.WriteLine(s);
                 this.OutputText.Text += s + "\r\n";
             }
+        }
+
+        void printPad(StreamWriter f)
+        {
+
         }
 
         void Initialization(StreamWriter f)
@@ -230,6 +241,13 @@ namespace GCodeGeneratorV6_Calligraphy
             write2File(f, spiralText);
         }
 
+        void Print_BLE_IC_breakout(StreamWriter f)
+        {
+            List<string> ICText = new List<string> { };
+            //this is unfinished but I'd like to put hte GCode for the nRF chip breakout board here
+
+        }
+
         void End(StreamWriter f)
         {
             List<string> endText = new List<string> { };
@@ -277,6 +295,11 @@ namespace GCodeGeneratorV6_Calligraphy
         }
 
         private void fileName_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void BLE_IC_breakout_CheckedChanged(object sender, EventArgs e)
         {
 
         }

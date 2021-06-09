@@ -44,6 +44,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.fileName = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
+            this.BLE_IC_breakout = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.XOriginInput)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.YOriginInput)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.InnerDiameterInput)).BeginInit();
@@ -207,11 +208,24 @@
             this.label5.TabIndex = 15;
             this.label5.Text = "Enter File Name:";
             // 
+            // BLE_IC_breakout
+            // 
+            this.BLE_IC_breakout.AutoSize = true;
+            this.BLE_IC_breakout.Location = new System.Drawing.Point(81, 165);
+            this.BLE_IC_breakout.Name = "BLE_IC_breakout";
+            this.BLE_IC_breakout.Size = new System.Drawing.Size(139, 21);
+            this.BLE_IC_breakout.TabIndex = 16;
+            this.BLE_IC_breakout.TabStop = true;
+            this.BLE_IC_breakout.Text = "BLE_IC_breakout";
+            this.BLE_IC_breakout.UseVisualStyleBackColor = true;
+            this.BLE_IC_breakout.CheckedChanged += new System.EventHandler(this.BLE_IC_breakout_CheckedChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1232, 450);
+            this.Controls.Add(this.BLE_IC_breakout);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.fileName);
             this.Controls.Add(this.label4);
@@ -256,6 +270,7 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox fileName;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.RadioButton BLE_IC_breakout;
     }
 }
 
