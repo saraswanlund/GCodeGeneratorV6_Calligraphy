@@ -39,15 +39,18 @@
             this.InnerDiameterInput = new System.Windows.Forms.NumericUpDown();
             this.OutputText = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
             this.filePath = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.fileName = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.BLE_IC_breakout = new System.Windows.Forms.RadioButton();
+            this.pulseValueLabel = new System.Windows.Forms.Label();
+            this.pulseValue = new System.Windows.Forms.NumericUpDown();
+            this.strainGaugeButton = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.XOriginInput)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.YOriginInput)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.InnerDiameterInput)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pulseValue)).BeginInit();
             this.SuspendLayout();
             // 
             // SnakeEdgeInput
@@ -165,15 +168,6 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(0, 0);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 11;
-            this.button2.Text = "button2";
-            this.button2.UseVisualStyleBackColor = true;
-            // 
             // filePath
             // 
             this.filePath.Location = new System.Drawing.Point(81, 269);
@@ -220,17 +214,48 @@
             this.BLE_IC_breakout.UseVisualStyleBackColor = true;
             this.BLE_IC_breakout.CheckedChanged += new System.EventHandler(this.BLE_IC_breakout_CheckedChanged);
             // 
+            // pulseValueLabel
+            // 
+            this.pulseValueLabel.AutoSize = true;
+            this.pulseValueLabel.Location = new System.Drawing.Point(302, 138);
+            this.pulseValueLabel.Name = "pulseValueLabel";
+            this.pulseValueLabel.Size = new System.Drawing.Size(87, 17);
+            this.pulseValueLabel.TabIndex = 18;
+            this.pulseValueLabel.Text = "Pulse Value:";
+            // 
+            // pulseValue
+            // 
+            this.pulseValue.Location = new System.Drawing.Point(302, 159);
+            this.pulseValue.Name = "pulseValue";
+            this.pulseValue.Size = new System.Drawing.Size(120, 22);
+            this.pulseValue.TabIndex = 19;
+            this.pulseValue.ValueChanged += new System.EventHandler(this.pulseValue_ValueChanged);
+            // 
+            // strainGaugeButton
+            // 
+            this.strainGaugeButton.AutoSize = true;
+            this.strainGaugeButton.Location = new System.Drawing.Point(81, 193);
+            this.strainGaugeButton.Name = "strainGaugeButton";
+            this.strainGaugeButton.Size = new System.Drawing.Size(117, 21);
+            this.strainGaugeButton.TabIndex = 20;
+            this.strainGaugeButton.TabStop = true;
+            this.strainGaugeButton.Text = "Strain_Gauge";
+            this.strainGaugeButton.UseVisualStyleBackColor = true;
+            this.strainGaugeButton.CheckedChanged += new System.EventHandler(this.strainGaugeButton_CheckedChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1232, 450);
+            this.Controls.Add(this.strainGaugeButton);
+            this.Controls.Add(this.pulseValue);
+            this.Controls.Add(this.pulseValueLabel);
             this.Controls.Add(this.BLE_IC_breakout);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.fileName);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.filePath);
-            this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.OutputText);
             this.Controls.Add(this.InnerDiameterInput);
@@ -247,6 +272,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.XOriginInput)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.YOriginInput)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.InnerDiameterInput)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pulseValue)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -265,12 +291,14 @@
         private System.Windows.Forms.NumericUpDown InnerDiameterInput;
         private System.Windows.Forms.TextBox OutputText;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
         private System.Windows.Forms.TextBox filePath;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox fileName;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.RadioButton BLE_IC_breakout;
+        private System.Windows.Forms.Label pulseValueLabel;
+        private System.Windows.Forms.NumericUpDown pulseValue;
+        private System.Windows.Forms.RadioButton strainGaugeButton;
     }
 }
 

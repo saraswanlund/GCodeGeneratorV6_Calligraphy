@@ -26,30 +26,31 @@ namespace GCodeGeneratorV6_Calligraphy
             string fullpath = folder + filename + ".GCODE";
             Debug.WriteLine(fullpath);
             StreamWriter outputFile = new StreamWriter(fullpath);
-
+            Initialization(outputFile);
 
             if (SnakeEdgeInput.Checked)
             {
-                Initialization(outputFile);
                 Print_Snake_Edge(outputFile);
             }
 
             if (SnakeMiddleInput.Checked)
             {
-                Initialization(outputFile);
                 Print_Snake_Middle(outputFile);
             }
 
             if (SpiralInput.Checked)
             {
-                Initialization(outputFile);
                 Print_Spiral(outputFile);
             }
 
             if(BLE_IC_breakout.Checked)
             {
-                Initialization(outputFile);
                 Print_BLE_IC_breakout(outputFile);
+            }
+
+            if (strainGaugeButton.Checked)
+            {
+                Print_strainGauge(outputFile);
             }
 
             End(outputFile);
@@ -63,11 +64,11 @@ namespace GCodeGeneratorV6_Calligraphy
                 this.OutputText.Text += s + "\r\n";
             }
         }
-
+        /*
         void printPad(StreamWriter f)
         {
 
-        }
+        }*/
 
         void Initialization(StreamWriter f)
         {
@@ -75,7 +76,7 @@ namespace GCodeGeneratorV6_Calligraphy
             initText.Add("G53");
             initText.Add("G21");
             initText.Add("G90");
-            initText.Add("M190 90");
+            //initText.Add("M190 90"); 
             initText.Add("T15");
             initText.Add("M756 S0.1");
             initText.Add("M6 T15 O1 X0 Y0 Z0");
@@ -83,14 +84,19 @@ namespace GCodeGeneratorV6_Calligraphy
             initText.Add("M722 S10000 E6000 P-100 T15");
 
             decimal InnerDiameter = InnerDiameterInput.Value;
+            int Pulses = Convert.ToInt32(pulseValue.Value);
 
-            initText.Add("M221 S1 T15 P250 W" + InnerDiameter.ToString() + " Z0.1");
+            initText.Add("M221 S1 T15 P" + Pulses.ToString() + " W" + InnerDiameter.ToString() + " Z0.1");
             initText.Add("M82");
             initText.Add("M229 E0 D0");
             initText.Add("G28 X0 Y0");
             initText.Add("G92 X0 Y0");
             initText.Add("G0 Z4");
-            initText.Add("G1 X210 Y120 F2400");
+            
+            decimal XOrigin = XOriginInput.Value;
+            decimal YOrigin = YOriginInput.Value;
+
+            initText.Add("G1 X" + XOrigin.ToString() + " Y" + YOrigin.ToString() + " F2400");
             initText.Add("G0 Z0.1");
             initText.Add("G91");
 
@@ -102,14 +108,7 @@ namespace GCodeGeneratorV6_Calligraphy
 
         void Print_Snake_Edge(StreamWriter f)
         {
-            decimal XOrigin = XOriginInput.Value;
-            decimal YOrigin = YOriginInput.Value;
-
             List<string> edgeText = new List<string> { };
-            edgeText.Add("G1 X" + XOrigin.ToString() + " Y" + YOrigin.ToString() + " F2400");
-            edgeText.Add("G0 Z0.1");
-            edgeText.Add("G91");
-            edgeText.Add("");
 
             decimal Width = 3;
             decimal Length = 3;
@@ -158,13 +157,7 @@ namespace GCodeGeneratorV6_Calligraphy
 
         void Print_Snake_Middle(StreamWriter f)
         {
-            decimal XOrigin = XOriginInput.Value;
-            decimal YOrigin = YOriginInput.Value;
             List<string> midText = new List<string> { };
-
-            midText.Add("G1 X" + XOrigin.ToString() + " Y" + YOrigin.ToString() + " F2400");
-            midText.Add("G0 Z0.1");
-            midText.Add("G91");
 
             midText.Add("G1 X1.5 Y1.5 F400");
             midText.Add("G1 Y1.5 E1 F400");
@@ -205,14 +198,7 @@ namespace GCodeGeneratorV6_Calligraphy
 
         void Print_Spiral(StreamWriter f)
         {
-            decimal XSpiral = XOriginInput.Value + (decimal)1.5;
-            decimal YSpiral = YOriginInput.Value + (decimal)1.5;
             List<string> spiralText = new List<string> { };
-
-            spiralText.Add("G1 X" + XSpiral.ToString() + " Y" + YSpiral.ToString() + " F400");
-            spiralText.Add("G0 Z0.1");
-            spiralText.Add("G91");
-            spiralText.Add("");
 
             decimal loops = (decimal)3 / (decimal)InnerDiameterInput.Value;
             decimal adder = InnerDiameterInput.Value / (decimal)2;
@@ -244,8 +230,63 @@ namespace GCodeGeneratorV6_Calligraphy
         void Print_BLE_IC_breakout(StreamWriter f)
         {
             List<string> ICText = new List<string> { };
-            //this is unfinished but I'd like to put hte GCode for the nRF chip breakout board here
+            
 
+
+        }
+
+        void Print_strainGauge(StreamWriter f)
+        {
+            List<string> strainText = new List<string> { };
+
+            strainText.Add("G1 Y25 E1 F400;");
+            strainText.Add("G1 X7 E1 F400;");
+            strainText.Add("G1 Y12 E1 F400;");
+
+            int turns = 11;
+
+            for (int i = 0; i < turns; i++) //FOR LOOP TO MAKE THE TURNS OF THE STRAIN GAUGE
+            {
+                strainText.Add("G1 Y25 E1 F400;");
+                strainText.Add("G1 X-1 E1 F400;");
+
+                decimal needleTipD = InnerDiameterInput.Value;
+                decimal stepover = (needleTipD / 2);
+                int steps = (int)Math.Ceiling(1 / stepover);
+                strainText.Add("G1 Y-" + (stepover*steps).ToString() +";");
+                
+                for(int j = 0; j < steps; j++)//FOR LOOP TO MAKE THE TINY SQUARES AT THE END OF THE GAUGE
+                {
+                    if(j%2 == 0)
+                    {
+                        strainText.Add("G1 X1 E1 F400;");
+                        strainText.Add("G1 Y" + stepover.ToString() + " E1 F400;");
+                    }
+                    else
+                    {
+                        strainText.Add("G1 X-1 E1 F400;");
+                        strainText.Add("G1 Y" + stepover.ToString() + " E1 F400;");
+                    }
+
+                }
+                strainText.Add("G1 X-1 E1 F400;");
+                strainText.Add("G1 Y-25 E1 F400;");
+
+                if (i == turns - 1)
+                {
+                    break;
+                }
+                else
+                {
+                    strainText.Add("G1 X-1 E1 F400;");
+                }
+            }
+
+            strainText.Add("G1 Y-12 E1 F400;");
+            strainText.Add("G1 X7 E1 F400;");
+            strainText.Add("G1 Y-25 E1 F400;");
+
+            write2File(f, strainText);
         }
 
         void End(StreamWriter f)
@@ -258,8 +299,7 @@ namespace GCodeGeneratorV6_Calligraphy
             endText.Add("G92 E0");
             endText.Add("G28 X0 Y0");
             endText.Add("M106 T10 S0");
-            endText.Add("M104 T10 S0");
-            endText.Add("M140 S0");
+            endText.Add("M104 S0");
             endText.Add("G91");
             endText.Add("G90");
             endText.Add("M84");
@@ -300,6 +340,16 @@ namespace GCodeGeneratorV6_Calligraphy
         }
 
         private void BLE_IC_breakout_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pulseValue_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void strainGaugeButton_CheckedChanged(object sender, EventArgs e)
         {
 
         }
