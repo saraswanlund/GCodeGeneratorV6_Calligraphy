@@ -47,6 +47,7 @@
             this.pulseValueLabel = new System.Windows.Forms.Label();
             this.pulseValue = new System.Windows.Forms.NumericUpDown();
             this.strainGaugeButton = new System.Windows.Forms.RadioButton();
+            this.BLEcircuitButton = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.XOriginInput)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.YOriginInput)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.InnerDiameterInput)).BeginInit();
@@ -243,11 +244,24 @@
             this.strainGaugeButton.UseVisualStyleBackColor = true;
             this.strainGaugeButton.CheckedChanged += new System.EventHandler(this.strainGaugeButton_CheckedChanged);
             // 
+            // BLEcircuitButton
+            // 
+            this.BLEcircuitButton.AutoSize = true;
+            this.BLEcircuitButton.Location = new System.Drawing.Point(81, 221);
+            this.BLEcircuitButton.Name = "BLEcircuitButton";
+            this.BLEcircuitButton.Size = new System.Drawing.Size(100, 21);
+            this.BLEcircuitButton.TabIndex = 21;
+            this.BLEcircuitButton.TabStop = true;
+            this.BLEcircuitButton.Text = "BLE_circuit";
+            this.BLEcircuitButton.UseVisualStyleBackColor = true;
+            this.BLEcircuitButton.CheckedChanged += new System.EventHandler(this.BLEcircuitButton_CheckedChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1232, 450);
+            this.Controls.Add(this.BLEcircuitButton);
             this.Controls.Add(this.strainGaugeButton);
             this.Controls.Add(this.pulseValue);
             this.Controls.Add(this.pulseValueLabel);
@@ -299,6 +313,7 @@
         private System.Windows.Forms.Label pulseValueLabel;
         private System.Windows.Forms.NumericUpDown pulseValue;
         private System.Windows.Forms.RadioButton strainGaugeButton;
+        private System.Windows.Forms.RadioButton BLEcircuitButton;
     }
 }
 

@@ -20,6 +20,8 @@ namespace GCodeGeneratorV6_Calligraphy
             InitializeComponent();
         }
 
+        const double pinLength = 4.0;
+
         private void button1_Click(object sender, EventArgs e)
         {
             string folder = filePath.Text;
@@ -44,7 +46,7 @@ namespace GCodeGeneratorV6_Calligraphy
                 Print_Spiral(outputFile);
             }
 
-            if(BLE_IC_breakout.Checked)
+            if (BLE_IC_breakout.Checked)
             {
                 Print_BLE_IC_breakout(outputFile);
             }
@@ -52,6 +54,11 @@ namespace GCodeGeneratorV6_Calligraphy
             if (strainGaugeButton.Checked)
             {
                 Print_strainGauge(outputFile);
+            }
+
+            if (BLEcircuitButton.Checked)
+            {
+                Print_BLE_circuit(outputFile);
             }
 
             End(outputFile);
@@ -229,13 +236,15 @@ namespace GCodeGeneratorV6_Calligraphy
             List<string> ICText = new List<string> { };
             //ASSUMING ORIGIN IS AT TOP LEFT CORNER OF PIN
 
-            double pinLength = 4.0;
+            //double pinLength = 4.0;
 
             ICText.Add("G0 Z3.9;");
             ICText.Add("G1 X10 Y4.2 F400;");
             ICText.Add("G0 Z-3.9");
 
             //PRINT A SPIRAL PAD
+            write2File(f, ICText);
+            ICText.Clear();
             Print_Spiral(f);
 
             ICText.Add("G1 X-" + (10 + pinLength).ToString() + " E1 F400;");
@@ -244,6 +253,8 @@ namespace GCodeGeneratorV6_Calligraphy
             ICText.Add("G0 Z-3.9;");
 
             //PRINT A SPIRAL PAD
+            write2File(f, ICText);
+            ICText.Clear();
             Print_Spiral(f);
 
             ICText.Add("G1 X-" + (10 + pinLength).ToString() + " E1 F400;");
@@ -252,6 +263,8 @@ namespace GCodeGeneratorV6_Calligraphy
             ICText.Add("G0 Z-3.9;");
 
             //PRINT A SPIRAL PAD
+            write2File(f, ICText);
+            ICText.Clear();
             Print_Spiral(f);
 
             ICText.Add("G1 X10 Y5 E1 F400;");
@@ -261,6 +274,8 @@ namespace GCodeGeneratorV6_Calligraphy
             ICText.Add("G0 Z-3.9;");
 
             //PRINT A SPIRAL PAD
+            write2File(f, ICText);
+            ICText.Clear();
             Print_Spiral(f);
 
             ICText.Add("G1 X" + (10 + pinLength).ToString() + " E1 F400;");
@@ -268,6 +283,8 @@ namespace GCodeGeneratorV6_Calligraphy
             ICText.Add("G1 X-" + (10 + pinLength).ToString() + " Y5.7 F400;");
 
             //PRINT A SPIRAL PAD
+            write2File(f, ICText);
+            ICText.Clear();
             Print_Spiral(f);
 
             ICText.Add("G1 X10 Y-5 E1 F400");
@@ -331,6 +348,48 @@ namespace GCodeGeneratorV6_Calligraphy
             write2File(f, strainText);
         }
 
+        void Print_BLE_circuit(StreamWriter f)
+        {
+            List<string> circuitText = new List<string> { };
+
+            //ASSUMES ORIGIN IS AT TOP LEFT OF CHIP AND CHIP IS LAYING SIDEWAYS (SO TOP LEFT BECOMES BOTTOM LEFT)
+
+            //GND PIN
+            circuitText.Add("G0 Z3.9;");
+            circuitText.Add("G1 X10 Y5 F400;");
+            circuitText.Add("G0 Z-3.9;");
+            write2File(f, circuitText);
+            circuitText.Clear();
+            Print_Spiral(f);
+            circuitText.Add("G1 X-14.2 E1 F400;");
+            circuitText.Add("G1 Y-" + (5 + pinLength).ToString() + " E1 F400;");
+            circuitText.Add("GO Z3.9");
+
+            //STRAIN GAUGE
+            circuitText.Add("G1 Y" + pinLength.ToString() + " F400;");
+            circuitText.Add("G0 Z-3.9;");
+            write2File(f, circuitText);
+            circuitText.Clear();
+            Print_strainGauge(f);
+            //****MUST MAKE ADJUSTMENTS TO STRAIN GAUGE TO LINE UP WITH PIN 28****
+            circuitText.Add("G1 Y" + pinLength + " E1 F400;");
+            circuitText.Add("G0 Z3.9;");
+
+            //VCC PIN
+            //****THE FOLLOWING X VALUES MUST BE EDITED TO FIT REALITY, THEY ARE ALL 0 BY DEFAULT FOR NOW****
+            circuitText.Add("G1 X-0 Y5 F400;");
+            circuitText.Add("G0 Z-3.9;");
+            write2File(f, circuitText);
+            circuitText.Clear();
+            Print_Spiral(f);
+            circuitText.Add("G1 X0 E1 F400;");
+            circuitText.Add("G1 Y" + (5 + pinLength) + " E1 F400;");
+
+            //WRITE CODE TO FILE
+            write2File(f, circuitText);
+
+        }
+
         void End(StreamWriter f)
         {
             List<string> endText = new List<string> { };
@@ -392,6 +451,11 @@ namespace GCodeGeneratorV6_Calligraphy
         }
 
         private void strainGaugeButton_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void BLEcircuitButton_CheckedChanged(object sender, EventArgs e)
         {
 
         }
