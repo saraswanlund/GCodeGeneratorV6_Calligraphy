@@ -14,6 +14,7 @@ namespace GCodeGeneratorV6_Calligraphy
 {
     public partial class Form1 : Form
     {
+
         public Form1()
         {
             InitializeComponent();
@@ -27,7 +28,7 @@ namespace GCodeGeneratorV6_Calligraphy
             Debug.WriteLine(fullpath);
             StreamWriter outputFile = new StreamWriter(fullpath);
             Initialization(outputFile);
-
+            
             if (SnakeEdgeInput.Checked)
             {
                 Print_Snake_Edge(outputFile);
@@ -64,11 +65,7 @@ namespace GCodeGeneratorV6_Calligraphy
                 this.OutputText.Text += s + "\r\n";
             }
         }
-        /*
-        void printPad(StreamWriter f)
-        {
-
-        }*/
+        
 
         void Initialization(StreamWriter f)
         {
@@ -230,8 +227,53 @@ namespace GCodeGeneratorV6_Calligraphy
         void Print_BLE_IC_breakout(StreamWriter f)
         {
             List<string> ICText = new List<string> { };
-            
+            //ASSUMING ORIGIN IS AT TOP LEFT CORNER OF PIN
 
+            double pinLength = 4.0;
+
+            ICText.Add("G0 Z3.9;");
+            ICText.Add("G1 X10 Y4.2 F400;");
+            ICText.Add("G0 Z-3.9");
+
+            //PRINT A SPIRAL PAD
+            Print_Spiral(f);
+
+            ICText.Add("G1 X-" + (10 + pinLength).ToString() + " E1 F400;");
+            ICText.Add("G0 Z3.9;");
+            ICText.Add("G1 X" + (10 + pinLength).ToString() + " Y9.3 F400;");
+            ICText.Add("G0 Z-3.9;");
+
+            //PRINT A SPIRAL PAD
+            Print_Spiral(f);
+
+            ICText.Add("G1 X-" + (10 + pinLength).ToString() + " E1 F400;");
+            ICText.Add("G0 Z3.9;");
+            ICText.Add("G1 X-" + (20 - pinLength).ToString() + " Y-12.7 F400;");
+            ICText.Add("G0 Z-3.9;");
+
+            //PRINT A SPIRAL PAD
+            Print_Spiral(f);
+
+            ICText.Add("G1 X10 Y5 E1 F400;");
+            ICText.Add("G1 X" + pinLength.ToString() + " E1 F400;");
+            ICText.Add("G0 Z3.9;");
+            ICText.Add("G1 X-" + (10 + pinLength).ToString() + " Y0.7 F400;");
+            ICText.Add("G0 Z-3.9;");
+
+            //PRINT A SPIRAL PAD
+            Print_Spiral(f);
+
+            ICText.Add("G1 X" + (10 + pinLength).ToString() + " E1 F400;");
+            ICText.Add("G0 Z3.9;");
+            ICText.Add("G1 X-" + (10 + pinLength).ToString() + " Y5.7 F400;");
+
+            //PRINT A SPIRAL PAD
+            Print_Spiral(f);
+
+            ICText.Add("G1 X10 Y-5 E1 F400");
+            ICText.Add("G1 X" + pinLength.ToString() + " E1 F400");
+
+            write2File(f, ICText);
 
         }
 
