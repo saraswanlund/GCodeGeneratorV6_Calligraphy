@@ -20,7 +20,7 @@ namespace GCodeGeneratorV6_Calligraphy
             InitializeComponent();
         }
 
-        const double pinLength = 4.0;
+        const double pinLength = 2.0;
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -227,7 +227,12 @@ namespace GCodeGeneratorV6_Calligraphy
                     temp = 0;
                 }
             }
-            
+
+            //RETURN TO CENTER
+            spiralText.Add("G0 Z3.9;");
+            spiralText.Add("G1 X-1.5 Y-1.5 F400");
+            spiralText.Add("G0 Z-3.9;");
+
             write2File(f, spiralText);
         }
 
@@ -235,8 +240,6 @@ namespace GCodeGeneratorV6_Calligraphy
         {
             List<string> ICText = new List<string> { };
             //ASSUMING ORIGIN IS AT TOP LEFT CORNER OF PIN
-
-            //double pinLength = 4.0;
 
             ICText.Add("G0 Z3.9;");
             ICText.Add("G1 X10 Y4.2 F400;");
@@ -281,6 +284,7 @@ namespace GCodeGeneratorV6_Calligraphy
             ICText.Add("G1 X" + (10 + pinLength).ToString() + " E1 F400;");
             ICText.Add("G0 Z3.9;");
             ICText.Add("G1 X-" + (10 + pinLength).ToString() + " Y5.7 F400;");
+            ICText.Add("G0 Z-3.9;");
 
             //PRINT A SPIRAL PAD
             write2File(f, ICText);
