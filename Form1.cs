@@ -20,7 +20,7 @@ namespace GCodeGeneratorV6_Calligraphy
             InitializeComponent();
         }
 
-        const double pinLength = 2.0;
+        const double pinLength = 1.1;
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -302,8 +302,8 @@ namespace GCodeGeneratorV6_Calligraphy
         {
             List<string> strainText = new List<string> { };
 
-            strainText.Add("G1 Y25 E1 F400;");
-            strainText.Add("G1 X7 E1 F400;");
+            strainText.Add("G1 Y12 E1 F400;");
+            strainText.Add("G1 X8.4 E1 F400;");
             strainText.Add("G1 Y12 E1 F400;");
 
             int turns = 11;
@@ -333,7 +333,7 @@ namespace GCodeGeneratorV6_Calligraphy
 
                 }
                 strainText.Add("G1 X-1 E1 F400;");
-                strainText.Add("G1 Y-25 E1 F400;");
+                strainText.Add("G1 Y-12 E1 F400;");
 
                 if (i == turns - 1)
                 {
@@ -346,8 +346,8 @@ namespace GCodeGeneratorV6_Calligraphy
             }
 
             strainText.Add("G1 Y-12 E1 F400;");
-            strainText.Add("G1 X7 E1 F400;");
-            strainText.Add("G1 Y-25 E1 F400;");
+            strainText.Add("G1 X8.4 E1 F400;");
+            strainText.Add("G1 Y-12 E1 F400;");
 
             write2File(f, strainText);
         }
@@ -358,36 +358,47 @@ namespace GCodeGeneratorV6_Calligraphy
 
             //ASSUMES ORIGIN IS AT TOP LEFT OF CHIP AND CHIP IS LAYING SIDEWAYS (SO TOP LEFT BECOMES BOTTOM LEFT)
 
-            //GND PIN
-            circuitText.Add("G0 Z3.9;");
-            circuitText.Add("G1 X10 Y5 F400;");
-            circuitText.Add("G0 Z-3.9;");
-            write2File(f, circuitText);
-            circuitText.Clear();
-            Print_Spiral(f);
-            circuitText.Add("G1 X-14.2 E1 F400;");
-            circuitText.Add("G1 Y-" + (5 + pinLength).ToString() + " E1 F400;");
-            circuitText.Add("GO Z3.9");
-
-            //STRAIN GAUGE
-            circuitText.Add("G1 Y" + pinLength.ToString() + " F400;");
-            circuitText.Add("G0 Z-3.9;");
-            write2File(f, circuitText);
-            circuitText.Clear();
+            //PRINT STRAIN GAUGE
             Print_strainGauge(f);
-            //****MUST MAKE ADJUSTMENTS TO STRAIN GAUGE TO LINE UP WITH PIN 28****
-            circuitText.Add("G1 Y" + pinLength + " E1 F400;");
-            circuitText.Add("G0 Z3.9;");
 
-            //VCC PIN
-            //****THE FOLLOWING X VALUES MUST BE EDITED TO FIT REALITY, THEY ARE ALL 0 BY DEFAULT FOR NOW****
-            circuitText.Add("G1 X-0 Y5 F400;");
+            //CONNECT TO VDD AND POWER
+            circuitText.Add("G1 Y-" + (20 + pinLength).ToString() + " E1 F400;");
+            circuitText.Add("G0 Z3.9;");
+            circuitText.Add("G1 Y" + (5 + pinLength).ToString() + " F400;");
+            circuitText.Add("G0 Z-3.9;");
+            circuitText.Add("G1 X-5 E1 F400;");
+            circuitText.Add("G1 Y-25 E1 F400;");
+
+            //PRINT PAD FOR +3.3V POWER
+            write2File(f, circuitText);
+            circuitText.Clear();
+            Print_Spiral(f);
+
+            //PRINT GND PAD
+            circuitText.Add("G0 Z3.9;");
+            circuitText.Add("G1 X14.3 F400;");
             circuitText.Add("G0 Z-3.9;");
             write2File(f, circuitText);
             circuitText.Clear();
             Print_Spiral(f);
-            circuitText.Add("G1 X0 E1 F400;");
-            circuitText.Add("G1 Y" + (5 + pinLength) + " E1 F400;");
+            circuitText.Add("G1 Y" + (10 + pinLength).ToString() + " E1 F400;");
+            circuitText.Add("G0 Z3.9;");
+
+            //ADD RESISTOR
+            circuitText.Add("G1 X-4.2 Y" + (30 - pinLength).ToString() + "F400;");
+            circuitText.Add("G0 Z-3.9;");
+            circuitText.Add("G1 X4.2 E1 F400;");
+            circuitText.Add("G1 Y-5 E1 F400;");
+            circuitText.Add("G0 Z3.9;");
+            circuitText.Add("G1 Y-10 F400;");
+            circuitText.Add("G0 Z-3.9;");
+            circuitText.Add("G1 Y-" + (5 + pinLength).ToString() + " E1 F400;");
+            circuitText.Add("G0 Z3.9;");
+
+            //ADD CONNECTION TO PIN 28
+            circuitText.Add("G1 X-4.2 Y" + (20 + pinLength).ToString() + " F400;");
+            circuitText.Add("G0 Z-3.9;");
+            circuitText.Add("G1 Y" + (20 + pinLength).ToString() + " E1 F400;");
 
             //WRITE CODE TO FILE
             write2File(f, circuitText);
