@@ -31,19 +31,19 @@ namespace GCodeGeneratorV6_Calligraphy
             StreamWriter outputFile = new StreamWriter(fullpath);
             Initialization(outputFile);
             
-            if (SnakeEdgeInput.Checked)
+            if (SnakeEdgeInput.Checked)//DEPRECATED
             {
                 Print_Snake_Edge(outputFile);
             }
 
-            if (SnakeMiddleInput.Checked)
+            if (SnakeMiddleInput.Checked)//DEPRECATED
             {
                 Print_Snake_Middle(outputFile);
             }
 
             if (SpiralInput.Checked)
             {
-                Print_Spiral(outputFile);
+                Print_Spiral(outputFile, (decimal)3.0);
             }
 
             if (BLE_IC_breakout.Checked)
@@ -59,6 +59,16 @@ namespace GCodeGeneratorV6_Calligraphy
             if (BLEcircuitButton.Checked)
             {
                 Print_BLE_circuit(outputFile);
+            }
+
+            if (traceTestButton.Checked)
+            {
+                Print_Trace_Test(outputFile, traceDir.Text.ToCharArray()[0]);
+            }
+
+            if (traceButton.Checked)
+            {
+                printTrace(outputFile, traceLen.Value ,traceDir.Text.ToCharArray()[0]);
             }
 
             End(outputFile);
@@ -88,7 +98,7 @@ namespace GCodeGeneratorV6_Calligraphy
             initText.Add("M722 S10000 E6000 P-100 T15");
 
             decimal InnerDiameter = InnerDiameterInput.Value;
-            int Pulses = Convert.ToInt32(pulseValue.Value);
+            int Pulses = (int)pulseValue.Value;
 
             initText.Add("M221 S1 T15 P" + Pulses.ToString() + " W" + InnerDiameter.ToString() + " Z0.1");
             initText.Add("M82");
@@ -108,6 +118,88 @@ namespace GCodeGeneratorV6_Calligraphy
             this.OutputText.Text = "";
             write2File(f, initText);
 
+        }
+
+        void Print_Trace_Test(StreamWriter f, char dir)
+        {
+            List<string> traceTestText = new List<string> { };
+
+            for(int i = 0; i < 10; i++)
+            {
+                write2File(f, traceTestText);
+                traceTestText.Clear();
+                if(dir == 'X' || dir == 'x')
+                {
+                    printTrace(f, (decimal)10.0, 'X');
+                    traceTestText.Add("G1 Y2 F400;");
+                }else if(dir == 'Y' || dir == 'y')
+                {
+                    printTrace(f, (decimal)10.0, 'Y');
+                    traceTestText.Add("G1 X2 F400;");
+                }
+                else
+                {
+                    printTrace(f, (decimal)10.0, 'e');
+                }
+            }
+
+            write2File(f, traceTestText);
+        }
+
+        void printTrace(StreamWriter f, decimal length, char dir)
+        {
+            List<string> traceText = new List<string> { };
+
+            //WILL PRINT A LINE IN THE DESIGNATED DIRECTION THAT IS <length> MM LONG AND THEN RETURNS TO THE START OF THE LINE
+            //ASSUMES THAT THE NEEDLE HEAD IS STARTING AT A Z HEIGHT OF 4 MM
+            if(dir == 'X' || dir == 'x')
+            {
+                traceText.Add("G0 Z-3.9;");
+                traceText.Add("G1 X" + length.ToString() + " E1 F400;");
+                traceText.Add("G0 Z3.9;");
+                traceText.Add("G1 X-" + length.ToString() + " F400;");
+            }
+            else if(dir == 'Y' || dir == 'y')
+            {
+                traceText.Add("G0 Z-3.9;");
+                traceText.Add("G1 Y" + length.ToString() + " E1 F400;");
+                traceText.Add("G0 Z3.9;");
+                traceText.Add("G1 Y-" + length.ToString() + " F400;");
+            }
+            else
+            {
+                traceText.Add("####ERROR, INVALID INPUT FOR TRACE DIRECTION####");
+            }
+
+            write2File(f, traceText);
+        }
+
+        void doubleTrace(StreamWriter f, decimal length, char dir)
+        {
+            List<string> dTraceText = new List<string> { };
+
+            //WILL PRINT A LINE IN THE DESIGNATED DIRECTION THAT IS <length> MM LONG AND THEN RETURNS TO THE START OF THE LINE
+            //ASSUMES THAT THE NEEDLE HEAD IS STARTING AT A Z HEIGHT OF 4 MM
+            if (dir == 'X' || dir == 'x')
+            {
+                dTraceText.Add("G0 Z-3.9;");
+                dTraceText.Add("G1 X" + length.ToString() + " E1 F400;");
+                dTraceText.Add("G1 X-" + length.ToString() + "E1 F400;");
+                dTraceText.Add("G0 Z3.9;");
+            }
+            else if (dir == 'Y' || dir == 'y')
+            {
+                dTraceText.Add("G0 Z-3.9;");
+                dTraceText.Add("G1 Y" + length.ToString() + " E1 F400;");
+                dTraceText.Add("G1 Y-" + length.ToString() + " E1 F400;");
+                dTraceText.Add("G0 Z3.9;");
+            }
+            else
+            {
+                dTraceText.Add("####ERROR, INVALID INPUT FOR TRACE DIRECTION####");
+            }
+
+            write2File(f, dTraceText);  
         }
 
         void Print_Snake_Edge(StreamWriter f)
@@ -200,11 +292,15 @@ namespace GCodeGeneratorV6_Calligraphy
             write2File(f, midText);
         }
 
-        void Print_Spiral(StreamWriter f)
+        void Print_Spiral(StreamWriter f, decimal size)
         {
             List<string> spiralText = new List<string> { };
 
-            decimal loops = (decimal)3 / (decimal)InnerDiameterInput.Value;
+            decimal InnerDiameter = InnerDiameterInput.Value;
+            int Pulses = (int)pulseValue.Value;
+            spiralText.Add("M221 S1 T15 P800 W" + InnerDiameter.ToString() + " Z0.1");
+
+            decimal loops = size / (decimal)InnerDiameterInput.Value;
             decimal adder = InnerDiameterInput.Value / (decimal)2;
             decimal temp = 0;
             for (int x = 1; x <= loops; x++)
@@ -230,9 +326,10 @@ namespace GCodeGeneratorV6_Calligraphy
 
             //RETURN TO CENTER
             spiralText.Add("G0 Z3.9;");
-            spiralText.Add("G1 X-1.5 Y-1.5 F400");
+            spiralText.Add("G1 X-" + (size/2).ToString() + " Y-" + (size/2).ToString() + " F400");
             spiralText.Add("G0 Z-3.9;");
 
+            spiralText.Add("M221 S1 T15 P" + Pulses.ToString() + " W" + InnerDiameter.ToString() + " Z0.1");
             write2File(f, spiralText);
         }
 
@@ -248,7 +345,7 @@ namespace GCodeGeneratorV6_Calligraphy
             //PRINT A SPIRAL PAD
             write2File(f, ICText);
             ICText.Clear();
-            Print_Spiral(f);
+            Print_Spiral(f, (decimal)3.0);
 
             ICText.Add("G1 X-" + (10 + pinLength).ToString() + " E1 F400;");
             ICText.Add("G0 Z3.9;");
@@ -258,7 +355,7 @@ namespace GCodeGeneratorV6_Calligraphy
             //PRINT A SPIRAL PAD
             write2File(f, ICText);
             ICText.Clear();
-            Print_Spiral(f);
+            Print_Spiral(f, (decimal)3.0);
 
             ICText.Add("G1 X-" + (10 + pinLength).ToString() + " E1 F400;");
             ICText.Add("G0 Z3.9;");
@@ -268,7 +365,7 @@ namespace GCodeGeneratorV6_Calligraphy
             //PRINT A SPIRAL PAD
             write2File(f, ICText);
             ICText.Clear();
-            Print_Spiral(f);
+            Print_Spiral(f, (decimal)3.0);
 
             ICText.Add("G1 X10 Y5 E1 F400;");
             ICText.Add("G1 X" + pinLength.ToString() + " E1 F400;");
@@ -279,7 +376,7 @@ namespace GCodeGeneratorV6_Calligraphy
             //PRINT A SPIRAL PAD
             write2File(f, ICText);
             ICText.Clear();
-            Print_Spiral(f);
+            Print_Spiral(f, (decimal)3.0);
 
             ICText.Add("G1 X" + (10 + pinLength).ToString() + " E1 F400;");
             ICText.Add("G0 Z3.9;");
@@ -289,7 +386,7 @@ namespace GCodeGeneratorV6_Calligraphy
             //PRINT A SPIRAL PAD
             write2File(f, ICText);
             ICText.Clear();
-            Print_Spiral(f);
+            Print_Spiral(f, (decimal)3.0);
 
             ICText.Add("G1 X10 Y-5 E1 F400");
             ICText.Add("G1 X" + pinLength.ToString() + " E1 F400");
@@ -302,52 +399,75 @@ namespace GCodeGeneratorV6_Calligraphy
         {
             List<string> strainText = new List<string> { };
 
-            strainText.Add("G1 Y12 E1 F400;");
-            strainText.Add("G1 X8.4 E1 F400;");
-            strainText.Add("G1 Y12 E1 F400;");
+            int turns = 24;
+            decimal InnerDiameter = InnerDiameterInput.Value;
 
-            int turns = 11;
-
+            //PRINT TRACES FIRST
+            strainText.Add("G1 Y12 E1 F400;");
             for (int i = 0; i < turns; i++) //FOR LOOP TO MAKE THE TURNS OF THE STRAIN GAUGE
             {
-                strainText.Add("G1 Y25 E1 F400;");
-                strainText.Add("G1 X-1 E1 F400;");
-
-                decimal needleTipD = InnerDiameterInput.Value;
-                decimal stepover = (needleTipD / 2);
-                int steps = (int)Math.Ceiling(1 / stepover);
-                strainText.Add("G1 Y-" + (stepover*steps).ToString() +";");
-                
-                for(int j = 0; j < steps; j++)//FOR LOOP TO MAKE THE TINY SQUARES AT THE END OF THE GAUGE
-                {
-                    if(j%2 == 0)
-                    {
-                        strainText.Add("G1 X1 E1 F400;");
-                        strainText.Add("G1 Y" + stepover.ToString() + " E1 F400;");
-                    }
-                    else
-                    {
-                        strainText.Add("G1 X-1 E1 F400;");
-                        strainText.Add("G1 Y" + stepover.ToString() + " E1 F400;");
-                    }
-
-                }
-                strainText.Add("G1 X-1 E1 F400;");
-                strainText.Add("G1 Y-12 E1 F400;");
+                write2File(f, strainText);
+                strainText.Clear();
+                doubleTrace(f, 25, 'y');
+                strainText.Add("G1 X-" + (1 + InnerDiameter).ToString() + " F400;");
 
                 if (i == turns - 1)
                 {
+                    strainText.Add("G1 X" + (1 + InnerDiameter).ToString() + " F400;");
+                    strainText.Add("G0 Z-3.9;");
                     break;
                 }
-                else
-                {
-                    strainText.Add("G1 X-1 E1 F400;");
-                }
+            }
+            strainText.Add("G1 Y-12 E1 F400;");
+            strainText.Add("G0 Z3.9;");
+
+            //PRINT PADS
+            //CONTACT PADS
+            strainText.Add("G1 Y12 F400;");
+            strainText.Add("G0 Z-3.9;");
+            strainText.Add("G1 Y-12 E1 F400;");
+            strainText.Add("G0 Z-3.9;");
+            write2File(f, strainText);
+            strainText.Clear();
+            Print_Spiral(f, 3);
+            strainText.Add("G0 Z3.9;");
+            strainText.Add("G1 X" + ((turns - 1) * (1 + InnerDiameter)).ToString() + " F400;");
+            strainText.Add("G0 Z-3.9;");
+            write2File(f, strainText);
+            strainText.Clear();
+            Print_Spiral(f, 3);
+            strainText.Add("G1 Y12 E1 F400;");
+            strainText.Add("G0 Z3.9;");
+            strainText.Add("G1 Y25 F400;");
+
+            //PRINT LOWER ROW OF PADS
+            strainText.Add("G1 X-" + ((1 + InnerDiameter)/2).ToString() + " F400;");
+            strainText.Add("G0 Z-3.9");
+            
+            for(int i = 0; i < turns/2; i++)
+            {
+                write2File(f, strainText);
+                strainText.Clear();
+                Print_Spiral(f, 1);
+                strainText.Add("G0 Z3.9;");
+                strainText.Add("G1 X-" + ((decimal)2.0 + InnerDiameter * (decimal)1.7).ToString() + " F400;");
+                strainText.Add("G0 Z-3.9;");
             }
 
-            strainText.Add("G1 Y-12 E1 F400;");
-            strainText.Add("G1 X8.4 E1 F400;");
-            strainText.Add("G1 Y-12 E1 F400;");
+            //PRINT UPPER PADS
+            strainText.Add("G0 Z3.9;");
+            strainText.Add("G1 X" + ((turns/2)*(((decimal)2.0 + InnerDiameter * (decimal)1.7))).ToString() + " Y-24 F400;");
+            strainText.Add("G1 X-" + (1+InnerDiameter).ToString() + " F400;");
+            strainText.Add("G0 Z-3.9;");
+            for(int i = 0; i < ((turns/2)-1); i++)
+            {
+                write2File(f, strainText);
+                strainText.Clear();
+                Print_Spiral(f, (decimal)0.5);
+                strainText.Add("G0 Z3.9;");
+                strainText.Add("G1 X-" + ((decimal)2.0 + InnerDiameter * (decimal)1.7).ToString() + " F400;");
+                strainText.Add("G0 Z-3.9;");
+            }
 
             write2File(f, strainText);
         }
@@ -356,52 +476,49 @@ namespace GCodeGeneratorV6_Calligraphy
         {
             List<string> circuitText = new List<string> { };
 
-            //ASSUMES ORIGIN IS AT TOP LEFT OF CHIP AND CHIP IS LAYING SIDEWAYS (SO TOP LEFT BECOMES BOTTOM LEFT)
-
-            //PRINT STRAIN GAUGE
-            Print_strainGauge(f);
-
-            //CONNECT TO VDD AND POWER
-            circuitText.Add("G1 Y-" + (20 + pinLength).ToString() + " E1 F400;");
+            //ASSUMES ORIGIN IS AT TOP LEFT GND PAD
+            Print_Spiral(f, 3);
             circuitText.Add("G0 Z3.9;");
-            circuitText.Add("G1 Y" + (5 + pinLength).ToString() + " F400;");
+            doubleTrace(f, (decimal)(12 + pinLength), 'Y');
+            circuitText.Add("G1 X-16 F400;");
             circuitText.Add("G0 Z-3.9;");
-            circuitText.Add("G1 X-5 E1 F400;");
-            circuitText.Add("G1 Y-25 E1 F400;");
-
-            //PRINT PAD FOR +3.3V POWER
-            write2File(f, circuitText);
-            circuitText.Clear();
-            Print_Spiral(f);
-
-            //PRINT GND PAD
-            circuitText.Add("G0 Z3.9;");
-            circuitText.Add("G1 X14.3 F400;");
             circuitText.Add("G0 Z-3.9;");
             write2File(f, circuitText);
             circuitText.Clear();
-            Print_Spiral(f);
+            Print_Spiral(f, 3);
+            circuitText.Add("G0 Z3.9");
+            write2File(f, circuitText);
+            circuitText.Clear();
+            doubleTrace(f, 32, 'y');
+            circuitText.Add("G1 Y32 F400;");
+            circuitText.Add("G0 Z-3.9");
+            write2File(f, circuitText);
+            circuitText.Clear();
+            doubleTrace(f, (decimal)9.6, 'x');
+            circuitText.Add("G1 X9.6 F400;");
+            circuitText.Add("G0 Z-3.9");
+            circuitText.Add("G1 Y-" + (10 + pinLength).ToString() + " E1 F400;");
             circuitText.Add("G1 Y" + (10 + pinLength).ToString() + " E1 F400;");
             circuitText.Add("G0 Z3.9;");
-
-            //ADD RESISTOR
-            circuitText.Add("G1 X-4.2 Y" + (30 - pinLength).ToString() + "F400;");
-            circuitText.Add("G0 Z-3.9;");
-            circuitText.Add("G1 X4.2 E1 F400;");
-            circuitText.Add("G1 Y-5 E1 F400;");
-            circuitText.Add("G0 Z3.9;");
-            circuitText.Add("G1 Y-10 F400;");
-            circuitText.Add("G0 Z-3.9;");
-            circuitText.Add("G1 Y-" + (5 + pinLength).ToString() + " E1 F400;");
-            circuitText.Add("G0 Z3.9;");
-
-            //ADD CONNECTION TO PIN 28
-            circuitText.Add("G1 X-4.2 Y" + (20 + pinLength).ToString() + " F400;");
-            circuitText.Add("G0 Z-3.9;");
-            circuitText.Add("G1 Y" + (20 + pinLength).ToString() + " E1 F400;");
-
-            //WRITE CODE TO FILE
+            circuitText.Add("G1 X-7.62 Y5 F400;");
             write2File(f, circuitText);
+            circuitText.Clear();
+            doubleTrace(f, (decimal)11.82, 'x');
+            circuitText.Add("G1 X11.82 F400;");
+            circuitText.Add("G0 Z-3.9;");
+            circuitText.Add("G1 Y-" + (15 + pinLength).ToString() + " E1 F400;");
+            circuitText.Add("G1 Y" + (15 + pinLength).ToString() + " E1 F400;");
+            circuitText.Add("G0 Z3.9;");
+            circuitText.Add("G1 X16.02 F400;");
+            circuitText.Add("G0 Z-3.9;");
+            circuitText.Add("G1 X-11.82 E1 F400;");
+            circuitText.Add("G1 Y-" + (15 + pinLength).ToString() + " E1 F400;");
+            circuitText.Add("G1 Y" + (15 + pinLength).ToString() + " E1 F400;");
+            circuitText.Add("G1 X11.82 E1 F400;");
+
+            write2File(f, circuitText);
+            circuitText.Clear();
+            Print_strainGauge(f);
 
         }
 
@@ -471,6 +588,26 @@ namespace GCodeGeneratorV6_Calligraphy
         }
 
         private void BLEcircuitButton_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void traceTestButton_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void traceDir_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void traceLen_ValueChanged(object sender, EventArgs e)
         {
 
         }

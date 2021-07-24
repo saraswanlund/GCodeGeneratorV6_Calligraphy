@@ -48,10 +48,17 @@
             this.pulseValue = new System.Windows.Forms.NumericUpDown();
             this.strainGaugeButton = new System.Windows.Forms.RadioButton();
             this.BLEcircuitButton = new System.Windows.Forms.RadioButton();
+            this.traceTestButton = new System.Windows.Forms.RadioButton();
+            this.traceDir = new System.Windows.Forms.TextBox();
+            this.traceDirLabel = new System.Windows.Forms.Label();
+            this.traceButton = new System.Windows.Forms.RadioButton();
+            this.traceLen = new System.Windows.Forms.NumericUpDown();
+            this.traceLenLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.XOriginInput)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.YOriginInput)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.InnerDiameterInput)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pulseValue)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.traceLen)).BeginInit();
             this.SuspendLayout();
             // 
             // SnakeEdgeInput
@@ -227,6 +234,11 @@
             // pulseValue
             // 
             this.pulseValue.Location = new System.Drawing.Point(302, 159);
+            this.pulseValue.Maximum = new decimal(new int[] {
+            1000000,
+            0,
+            0,
+            0});
             this.pulseValue.Name = "pulseValue";
             this.pulseValue.Size = new System.Drawing.Size(120, 22);
             this.pulseValue.TabIndex = 19;
@@ -256,11 +268,75 @@
             this.BLEcircuitButton.UseVisualStyleBackColor = true;
             this.BLEcircuitButton.CheckedChanged += new System.EventHandler(this.BLEcircuitButton_CheckedChanged);
             // 
+            // traceTestButton
+            // 
+            this.traceTestButton.AutoSize = true;
+            this.traceTestButton.Location = new System.Drawing.Point(81, 57);
+            this.traceTestButton.Name = "traceTestButton";
+            this.traceTestButton.Size = new System.Drawing.Size(121, 21);
+            this.traceTestButton.TabIndex = 22;
+            this.traceTestButton.TabStop = true;
+            this.traceTestButton.Text = "Trace_Testing";
+            this.traceTestButton.UseVisualStyleBackColor = true;
+            this.traceTestButton.CheckedChanged += new System.EventHandler(this.traceTestButton_CheckedChanged);
+            // 
+            // traceDir
+            // 
+            this.traceDir.Location = new System.Drawing.Point(208, 57);
+            this.traceDir.Name = "traceDir";
+            this.traceDir.Size = new System.Drawing.Size(42, 22);
+            this.traceDir.TabIndex = 23;
+            this.traceDir.TextChanged += new System.EventHandler(this.traceDir_TextChanged);
+            // 
+            // traceDirLabel
+            // 
+            this.traceDirLabel.AutoSize = true;
+            this.traceDirLabel.Location = new System.Drawing.Point(188, 37);
+            this.traceDirLabel.Name = "traceDirLabel";
+            this.traceDirLabel.Size = new System.Drawing.Size(109, 17);
+            this.traceDirLabel.TabIndex = 24;
+            this.traceDirLabel.Text = "Trace Direction:";
+            // 
+            // traceButton
+            // 
+            this.traceButton.AutoSize = true;
+            this.traceButton.Location = new System.Drawing.Point(81, 30);
+            this.traceButton.Name = "traceButton";
+            this.traceButton.Size = new System.Drawing.Size(66, 21);
+            this.traceButton.TabIndex = 25;
+            this.traceButton.TabStop = true;
+            this.traceButton.Text = "Trace";
+            this.traceButton.UseVisualStyleBackColor = true;
+            this.traceButton.CheckedChanged += new System.EventHandler(this.radioButton1_CheckedChanged);
+            // 
+            // traceLen
+            // 
+            this.traceLen.Location = new System.Drawing.Point(208, 111);
+            this.traceLen.Name = "traceLen";
+            this.traceLen.Size = new System.Drawing.Size(88, 22);
+            this.traceLen.TabIndex = 26;
+            this.traceLen.ValueChanged += new System.EventHandler(this.traceLen_ValueChanged);
+            // 
+            // traceLenLabel
+            // 
+            this.traceLenLabel.AutoSize = true;
+            this.traceLenLabel.Location = new System.Drawing.Point(200, 84);
+            this.traceLenLabel.Name = "traceLenLabel";
+            this.traceLenLabel.Size = new System.Drawing.Size(97, 17);
+            this.traceLenLabel.TabIndex = 27;
+            this.traceLenLabel.Text = "Trace Length:";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1232, 450);
+            this.Controls.Add(this.traceLenLabel);
+            this.Controls.Add(this.traceLen);
+            this.Controls.Add(this.traceButton);
+            this.Controls.Add(this.traceDirLabel);
+            this.Controls.Add(this.traceDir);
+            this.Controls.Add(this.traceTestButton);
             this.Controls.Add(this.BLEcircuitButton);
             this.Controls.Add(this.strainGaugeButton);
             this.Controls.Add(this.pulseValue);
@@ -287,6 +363,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.YOriginInput)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.InnerDiameterInput)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pulseValue)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.traceLen)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -314,6 +391,12 @@
         private System.Windows.Forms.NumericUpDown pulseValue;
         private System.Windows.Forms.RadioButton strainGaugeButton;
         private System.Windows.Forms.RadioButton BLEcircuitButton;
+        private System.Windows.Forms.RadioButton traceTestButton;
+        private System.Windows.Forms.TextBox traceDir;
+        private System.Windows.Forms.Label traceDirLabel;
+        private System.Windows.Forms.RadioButton traceButton;
+        private System.Windows.Forms.NumericUpDown traceLen;
+        private System.Windows.Forms.Label traceLenLabel;
     }
 }
 
